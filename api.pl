@@ -22,6 +22,9 @@
 % examples
 % search('walrus', RecommendedUsers, ErrorCode, Num).
 % search('(grumpy cat OR cat) OR (#meme has:images)', RecommendedUsers, ErrorCode, Num).
+% "twitter data" has:mentions (has:media OR has:links)
+% (nasa OR space) has:links
+% twitter(has%3Amedia)
 
 get_bearer_token(T) :- getenv("TWITTER_BEARER_TOKEN", T).
 
@@ -29,6 +32,7 @@ search(My_Search,RecommendedUsers,ErrorCode, M):-
 	get_bearer_token(B_Token64),
 	Path='/1.1/search/tweets.json',
 	Search=[q(My_Search), result_type='popular'],
+	% Search=[q(My_Search)],
 	get_response(Path, Search, B_Token64, RecommendedUsers, ErrorCode, M).
 
 get_response(Path, Search, B_Token64, RecommendedUsers, ErrorCode, M) :-
