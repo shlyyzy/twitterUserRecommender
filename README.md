@@ -1,4 +1,4 @@
-# twitterUserRecommender
+# Twitter User Recommendation System
 Twitter user recommendation system written in Prolog. 
 
 ## To Run
