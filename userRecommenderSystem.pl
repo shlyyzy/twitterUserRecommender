@@ -3,15 +3,6 @@
 :- use_module(api).
 
 /* 
-  SET UP:
-    export TWITTER_BEARER_TOKEN=<secret_bearer_token>
-    TO SEE FULL LIST OF REC USERS: set_prolog_flag(answer_write_options,[max_depth(0)]).
-    TO RUN: q(Ln, RecommendedUsers, NumResults)
-    QUERY MUST BE STRUCTURED AS SO:
-      [\w [or|and]+\w]* [[filter]+ [[media|links|images|native_video|retweets|verified|quote]+ [and|or]+]*]
-*/
-
-/* 
   q is true if query is valid and there is a successful req sent to the twitter API for a list of recommended users
   q accepts and validate an input query to filter Tweets, send it to the Twitter API, return back the recommended users
 */
@@ -77,7 +68,12 @@ create_filters([], "").
 deconstruct([H|T], [H | Q], X) :- deconstruct(T, Q, X).
 deconstruct([filter | T], [], T).
 
-% sample query:
-% grumpy cat and meme filter media
-% nasa and space filter media or verified
-% filter media
+/* 
+      sample queries:
+      grumpy cat or cat filter media or verified
+      nasa and space filter media
+      - valid with no query: filter media, filter media or verified, filter media and native_video
+      - invalid examples: 
+        filter, filter media and, filter media and tweets, ; nasa ; filter media, nasa ; filter media, or nasa filter media, filter media retweets, grumpy cat filter, grumpy and and cat, filter media and and images
+      - valid examples: something, meme filter links, xyz
+*/
